@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: urfu
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://url
+    username: postgres
+    password: password
+  mvc:
+    view:
+      suffix: .html

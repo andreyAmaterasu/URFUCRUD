@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Создание пользователя</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript" src="/webjars/jquery/3.6.3/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:replace="~{header :: header(${loggedUser})}"></div>
+<div style="margin: 30px 0 0 50px;">
+  <div class="row mt-3">
+    <div class="col">
+      <a class="btn btn-primary" th:href="@{/users}">Назад</a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="display-3">Новый пользователь</h1>
+      <p class="h6">Заполните обязательные поля</p>
+    </div>
+  </div>
+  <form action="#" th:action="@{/users/create}" th:object="${user}" style="max-width: 700px;"
+        method="post">
+    <fieldset>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="text" th:field="${user.username}" class="form-control input-lg"
+                 placeholder="Логин *" required="required" autofocus="autofocus" />
+          <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="text" th:field="${user.lastname}" class="form-control input-lg"
+                 placeholder="Фамилия *" required="required" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="text" th:field="${user.firstname}" class="form-control input-lg"
+                 placeholder="Имя *" required="required" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="text" th:field="${user.patronymic}" class="form-control input-lg"
+                 placeholder="Отчество" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="text" th:field="${user.email}" class="form-control input-lg"
+                 placeholder="Email" />
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="password" th:field="${user.password}" class="form-control input-lg"
+                 placeholder="Пароль *" required="required" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="password" th:field="${user.matchingPassword}" class="form-control input-lg"
+                 placeholder="Подтвердите пароль *" required="required" />
+          <span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" style="color: red;"></span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <input type="submit" id="submitButton" class="btn btn-success" th:value="Cохарнить" />
+          <input type="reset" id="resetButton" class="btn btn-danger" name="reset" th:value="Сброс" style="margin-left: 20px;" />
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+</body>
+</html>

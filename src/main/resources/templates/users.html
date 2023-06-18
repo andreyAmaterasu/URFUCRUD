@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Пользователи</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript" src="/webjars/jquery/3.6.3/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:replace="~{header :: header(${loggedUser})}"></div>
+<div style="margin: 30px 50px 0 50px;">
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="display-3">Список пользователей</h1>
+    </div>
+  </div>
+  <div sec:authorize="hasRole('ADMIN')" class="row mt-3">
+    <div class="col">
+      <a class="btn btn-primary" th:href="@{/users/createUser}">Создать пользователя</a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <table class="table">
+      <tr>
+        <th class="col-1" scope="col">#</th>
+        <th class="col-2" scope="col">Логин</th>
+        <th class="col-2" scope="col">Фамилия</th>
+        <th class="col-2" scope="col">Имя</th>
+        <th class="col-2" scope="col">Отчество</th>
+        <th class="col-2" scope="col">Email</th>
+        <th class="col-1" scope="col"></th>
+        <th class="col-1" scope="col"></th>
+      </tr>
+      <tr th:if="${users.isEmpty()}">
+        <td colspan="5"> No Users Available </td>
+      </tr>
+      <tr th:each="user : ${users}">
+        <td><span th:text="${user.id}"></span></td>
+        <td><span th:text="${user.username}"></span><span th:if="${user.id} == ${loggedUser.id}"> (Я)</span></td>
+        <td><span th:text="${user.lastname}"></span></td>
+        <td><span th:text="${user.firstname}"></span></td>
+        <td><span th:text="${user.patronymic}"></span></td>
+        <td><span th:text="${user.email}"></span></td>
+        <td><a sec:authorize="hasRole('ADMIN')" class="btn btn-secondary btn-sm" th:href="@{/users/edit/{id}(id=${user.id})}">Редактировать</a></td>
+        <td><a th:if="${user.id} != ${loggedUser.id}" sec:authorize="hasRole('ADMIN')" class="btn btn-danger btn-sm" th:href="@{/users/delete/{id}(id=${user.id})}">Удалить</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
