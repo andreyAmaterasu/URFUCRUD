@@ -64,13 +64,13 @@
                  placeholder="Пароль *" required="required" />
         </div>
       </div>
-      <div class="row mt-3">
-        <div class="col">
-          <input type="password" th:field="${user.matchingPassword}" class="form-control input-lg"
-                 placeholder="Подтвердите пароль *" required="required" />
-          <span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" style="color: red;"></span>
-        </div>
-      </div>
+<!--      <div class="row mt-3">-->
+<!--        <div class="col">-->
+<!--          <input type="password" th:field="${user.matchingPassword}" class="form-control input-lg"-->
+<!--                 placeholder="Подтвердите пароль *" required="required" />-->
+<!--          <span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" style="color: red;"></span>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="row mt-3">
         <div class="col">
           <input type="submit" id="submitButton" class="btn btn-success" th:value="Cохарнить" />

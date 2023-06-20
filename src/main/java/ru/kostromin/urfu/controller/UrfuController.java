@@ -48,7 +48,7 @@ public class UrfuController {
   }
 
   @PostMapping("/users/create")
-  public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+  public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
       return "createUser";
@@ -77,11 +77,9 @@ public class UrfuController {
     User savedUser = userRepository.findById(user.getId())
         .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + user.getId()));
     user.setRoles(savedUser.getRoles());
-    savedUser.setMatchingPassword(savedUser.getPassword());
     if (StringUtils.hasText(user.getPassword()) &&
         !passwordEncoder.matches(user.getPassword(), savedUser.getPassword())) {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
-      savedUser.setPassword(user.getPassword());
     } else {
       user.setPassword(savedUser.getPassword());
     }

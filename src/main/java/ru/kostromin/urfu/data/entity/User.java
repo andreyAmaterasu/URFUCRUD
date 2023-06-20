@@ -18,9 +18,9 @@ import ru.kostromin.urfu.validation.user.UsernameNotDuplicate;
 import ru.kostromin.urfu.validation.user.ValidEmailFormat;
 import ru.kostromin.urfu.validation.user.PasswordMatches;
 
-@Entity(name = "users")
+@Entity(name = "app_user")
 @Data
-@PasswordMatches(messageField = "matchingPassword")
+//@PasswordMatches(messageField = "matchingPassword")
 public class User implements UserDetails {
 
   @Id
@@ -84,10 +84,5 @@ public class User implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-    this.matchingPassword = password;
   }
 }

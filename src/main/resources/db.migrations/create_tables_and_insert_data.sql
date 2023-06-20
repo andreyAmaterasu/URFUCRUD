@@ -1,4 +1,4 @@
-create table if not exists users (
+create table if not exists app_user (
     id serial primary key ,
     username varchar(50) not null default '',
     lastname varchar (100) not null default '',
@@ -19,15 +19,15 @@ create table if not exists role (
 create table if not exists user_role (
     fk_user_id int not null,
     fk_role_id int not null,
-    constraint fk_user_id foreign key (fk_user_id) references users(id) on delete cascade on update cascade,
+    constraint fk_user_id foreign key (fk_user_id) references app_user(id) on delete cascade on update cascade,
     constraint fk_role_id foreign key (fk_role_id) references role(id) on delete cascade on update cascade
 );
 
-insert into users(username, lastname, firstname, patronymic, password, email, enabled)
+insert into app_user(username, lastname, firstname, patronymic, password, email, enabled)
 select 'admin', 'Админов', 'Админ', 'Админович', '$2a$12$PWfl/9KGv3SN0XcdFSJ6OueUT9K6uYADhCOv.us3MKtgG0ESrbJsW', 'admin@gmail.com', true
 where not exists(
     select 1
-    from users
+    from app_user
     where username = 'admin' and lastname = 'Админов' and firstname = 'Админ' and patronymic = 'Админович'
       and password = '$2a$12$PWfl/9KGv3SN0XcdFSJ6OueUT9K6uYADhCOv.us3MKtgG0ESrbJsW' and email = 'admin@gmail.com' and enabled = true);
 
