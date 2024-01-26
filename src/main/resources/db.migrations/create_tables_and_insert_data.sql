@@ -23,13 +23,34 @@ create table if not exists user_role (
     constraint fk_role_id foreign key (fk_role_id) references role(id) on delete cascade on update cascade
 );
 
+create table if not exists book (
+    id serial primary key ,
+    name varchar(100) not null default '',
+    description varchar (300) not null default '',
+    genre varchar (50) not null default ''
+);
+
+create table if not exists store (
+    id serial primary key ,
+    name varchar(100) not null default '',
+    address varchar (300) not null default ''
+);
+
+create table if not exists book_store (
+    fk_book_id int not null,
+    fk_store_id int not null,
+    price double precision not null,
+    constraint fk_book_id foreign key (fk_book_id) references book(id) on delete cascade on update cascade,
+    constraint fk_store_id foreign key (fk_store_id) references store(id) on delete cascade on update cascade
+);
+
 insert into app_user(username, lastname, firstname, patronymic, password, email, enabled)
-select 'admin', 'Админов', 'Админ', 'Админович', '$2a$12$PWfl/9KGv3SN0XcdFSJ6OueUT9K6uYADhCOv.us3MKtgG0ESrbJsW', 'admin@gmail.com', true
+select 'admin', 'Админов', 'Админ', 'Админович', '$2a$12$HKQHThd.DwmiNuTrpqMYF.SbOk8KHKf96O2KQenGDaZkEu0g0xKqa', 'admin@gmail.com', true
 where not exists(
     select 1
     from app_user
     where username = 'admin' and lastname = 'Админов' and firstname = 'Админ' and patronymic = 'Админович'
-      and password = '$2a$12$PWfl/9KGv3SN0XcdFSJ6OueUT9K6uYADhCOv.us3MKtgG0ESrbJsW' and email = 'admin@gmail.com' and enabled = true);
+      and password = '$2a$12$HKQHThd.DwmiNuTrpqMYF.SbOk8KHKf96O2KQenGDaZkEu0g0xKqa' and email = 'admin@gmail.com' and enabled = true);
 
 insert into role (name, description, enabled)
 select t_role.name, t_role.description, t_role.enabled

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Профиль</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript" src="/webjars/jquery/3.6.3/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:replace="~{header :: header(${loggedUser})}"></div>
+<div style="margin: 30px 0 0 50px;">
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="display-3">Список книг</h1>
+    </div>
+  </div>
+  <div sec:authorize="hasAnyRole('ADMIN', 'USER')" class="row mt-3">
+    <div class="col">
+      <a class="btn btn-primary" th:href="@{/books/create}">Добавить книгу</a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <table class="table">
+      <tr>
+        <th class="col-1" scope="col">#</th>
+        <th class="col-2" scope="col">Наименование</th>
+        <th class="col-2" scope="col">Описание</th>
+        <th class="col-2" scope="col">Жанр</th>
+        <th class="col-2" scope="col">Стоимость</th>
+        <th class="col-1" scope="col"></th>
+      </tr>
+      <tr th:if="${dtos.isEmpty()}">
+        <td colspan="5"> No Books Available </td>
+      </tr>
+      <tr th:each="dto : ${dtos}">
+        <td><span th:text="${dto.book.id}"></span></td>
+        <td><span th:text="${dto.book.name}"></span></td>
+        <td><span th:text="${dto.book.description}"></span></td>
+        <td><span th:text="${dto.book.genre}"></span></td>
+        <td><span th:text="${dto.price}"></span></td>
+        <td><a class="btn btn-danger btn-sm" th:href="@{/books/delete/{id}(id=${dto.book.id})}">Удалить</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>

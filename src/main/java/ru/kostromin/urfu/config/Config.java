@@ -21,14 +21,14 @@ public class Config {
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
     http.authorizeHttpRequests(auth ->
-            auth.requestMatchers("/users", "/hello").hasRole("USER")
+            auth.requestMatchers("/users", "/hello").hasAnyRole("USER", "READ_ONLY")
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/webjars/**").permitAll()
                 .anyRequest().authenticated()
     ).formLogin(form -> form
             .loginPage("/login")
             .permitAll()
-            .defaultSuccessUrl("/users", true)
+            .defaultSuccessUrl("/main", true)
     ).logout(LogoutConfigurer::permitAll);
 
     return http.build();
